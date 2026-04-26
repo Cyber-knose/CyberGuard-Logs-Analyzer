@@ -1,0 +1,122 @@
+from flask import Flask, request, jsonify
+from flask_cors import CORS
+import pandas as pd
+import numpy as np
+import os
+import json
+from datetime import datetime, timedelta
+from collections import Counter
+import threading
+import time
+
+app = Flask(__name__)
+CORS(app)
+
+# Data folder
+DATA_DIR = 'data'
+os.makedirs(DATA_DIR, exist_ok=True)
+
+class LogAnalyzer:
+    def __init__(self):
+        self.logs = []
+        self.load_logs()
+    
+    def load_logs(self):
+        """Load all JSON logs from data folder"""
+        log_files = [f for f in os.listdir(DATA_DIR) if f.endswith('.json')]
+        self.logs = []
+        for log_file in log_files:
+            try:
+                filepath = os.path.join(DATA_DIR, log_file)
+                with open(filepath, 'r') as f:
+                    file_logs = json.load(f)
+                    self.logs.extend(file_logs)
+            except Exception as e:
+                print(f"Error loading {log_file}: {e}")
+        
+        # Sort by timestamp
+        self.logs.sort(key=lambda x: x.get('timestamp', ''), reverse=True)
+        print(f"✅ Loaded {len(self.logs)} logs from {len(log_files)} files")
+    
+    def generate_sample_logs(self):
+        """Generate sample logs"""
+        sample_logs = []
+        now = datetime.now()
+        
+        actions = ['accept', 'deny', 'drop']
+        ports = [80, 443, 22, 3389, 53, 123]
+        
+        for i in range(500):
+            log = {
+                'timestamp': (now - timedelta(minutes=i)).isoformat(),
+                'src_ip': f"{np.random.randint(192,255)}.{np.random.randint(0,255)}.{np.random.randint(0,255)}.{np.random.randint(1,255)}",
+                'dst_ip': f"10.0.0.{np.random.randint(1,255)}",
+                'action': actions[np.random.randint(0,3)],
+                'port': ports[np.random.randint(0,6)],
+                'bytes': np.random.randint(0, 5000),
+                'user': f'user{np.random.randint(0,10)}',
+                'threat_score': round(np.random.uniform(0.1, 0.95), 2)
+            }
+            sample_logs.append(log)
+        
+        # Save to data folder
+        with open(os.path.join(DATA_DIR, 'sample_logs.json'), 'w') as f:
+            json.dump(sample_logs, f, indent=2)
+        
+        self.logs = sample_logs
+        print("✅ Generated 500 sample logs")
+
+analyzer = LogAnalyzer()
+
+@app.route('/api/logs')
+def get_logs():
+    query = request.args.get('q', '').lower()
+    logs = analyzer.logs[-100:]
+    
+    if query:
+        logs = [log for log in logs if any(
+            query in str(log.get(k, '')).lower() 
+            for k in ['src_ip', 'dst_ip', 'action', 'user']
+        )]
+    
+    return jsonify(logs)
+
+@app.route('/api/stats')
+def get_stats():
+    recent_logs = analyzer.logs[-200:]
+    stats = {
+        'total_logs': len(analyzer.logs),
+        'recent_logs': len(recent_logs),
+        'unique_ips': len(set(log.get('src_ip', '') for log in recent_logs)),
+        'actions': dict(Counter(log.get('action', '') for log in recent_logs)),
+        'top_ports': dict(Counter(log.get('port', 0) for log in recent_logs).most_common(5)),
+        'avg_bytes': int(np.mean([log.get('bytes', 0) for log in recent_logs])),
+        'threat_score_avg': round(np.mean([log.get('threat_score', 0) for log in recent_logs]), 2)
+    }
+    return jsonify(stats)
+
+@app.route('/api/threats')
+def get_threats():
+    recent_logs = analyzer.logs[-200:]
+    
+    src_freq = Counter(log.get('src_ip', '') for log in recent_logs)
+    high_threat = [log for log in recent_logs if log.get('threat_score', 0) > 0.8]
+    
+    threats = {
+        'ddos_suspects': [ip for ip, count in src_freq.most_common(5) if count > 8],
+        'high_threat_ips': list({log['src_ip'] for log in high_threat}),
+        'failed_logins': len([log for log in recent_logs if log.get('action') == 'deny']),
+        'alert_count': len(high_threat)
+    }
+    return jsonify(threats)
+
+@app.route('/api/generate')
+def generate_logs():
+    analyzer.generate_sample_logs()
+    return jsonify({'status': 'success', 'logs_generated': len(analyzer.logs)})
+
+if __name__ == '__main__':
+    analyzer.generate_sample_logs()
+    print("🚀 Backend running on http://localhost:5000")
+    print("📡 APIs: /api/logs, /api/stats, /api/threats, /api/generate")
+    app.run(debug=True, port=5000)

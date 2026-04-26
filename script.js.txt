@@ -1,0 +1,88 @@
+class CyberGuard {
+    constructor() {
+        this.API_BASE = 'http://localhost:5000/api';
+        this.logs = [];
+        this.init();
+    }
+
+    init() {
+        this.bindEvents();
+        this.loadAllData();
+        this.startAutoRefresh();
+    }
+
+    bindEvents() {
+        document.getElementById('searchInput').addEventListener('input', (e) => this.searchLogs(e.target.value));
+        document.getElementById('refreshBtn').addEventListener('click', () => this.loadAllData());
+        document.getElementById('generateBtn').addEventListener('click', () => this.generateLogs());
+    }
+
+    async apiCall(endpoint) {
+        try {
+            const res = await fetch(`${this.API_BASE}${endpoint}`);
+            return await res.json();
+        } catch (e) {
+            this.setStatus('offline', 'Connection Error');
+            console.error('API Error:', e);
+            return null;
+        }
+    }
+
+    async loadAllData() {
+        const [logs, stats, threats] = await Promise.all([
+            this.apiCall('/logs'),
+            this.apiCall('/stats'),
+            this.apiCall('/threats')
+        ]);
+
+        if (logs) {
+            this.logs = logs;
+            this.renderLogs();
+            this.setStatus('online', 'Live');
+        }
+        if (stats) this.renderStats(stats);
+        if (threats) this.renderThreats(threats);
+    }
+
+    renderStats(stats) {
+        const dashboard = document.getElementById('dashboard');
+        dashboard.innerHTML = `
+            <div class="stat-card">
+                <div class="stat-icon"><i class="fas fa-file-alt"></i></div>
+                <div class="stat-info">
+                    <h3>${stats.total_logs.toLocaleString()}</h3>
+                    <p>Total Logs</p>
+                </div>
+            </div>
+            <div class="stat-card warning">
+                <div class="stat-icon"><i class="fas fa-exclamation-triangle"></i></div>
+                <div class="stat-info">
+                    <h3>${stats.alert_count || 0}</h3>
+                    <p>Alerts</p>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon"><i class="fas fa-chart-line"></i></div>
+                <div class="stat-info">
+                    <h3>${stats.threat_score_avg}</h3>
+                    <p>Threat Score</p>
+                </div>
+            </div>
+        `;
+    }
+
+    renderThreats(threats) {
+        const container = document.getElementById('threatsList');
+        container.innerHTML = `
+            <div class="threat-item"><span>DDoS Suspects</span><span>${threats.ddos_suspects?.length || 0}</span></div>
+            <div class="threat-item"><span>High Threat IPs</span><span>${threats.high_threat_ips?.length || 0}</span></div>
+            <div class="threat-item"><span>Failed Logins</span><span>${threats.failed_logins || 0}</span></div>
+        `;
+    }
+
+    renderLogs(logs = this.logs) {
+        const tbody = document.getElementById('logsBody');
+        tbody.innerHTML = logs.slice(0, 20).map(log => {
+            const time = new Date(log.timestamp).toLocaleTimeString();
+            const threatClass = log.threat_score > 0.8 ? 'threat-high' : 
+                              
