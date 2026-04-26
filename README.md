@@ -4,7 +4,7 @@ Repository Name: CyberGuard-Logs-Analyzer Description: 🔒 Real-time Cybersecur
 # 🔒 CyberGuard Logs Analyzer
 
 <div align="center">
-  <img src="https://via.placeholder.com/800x400/1a1a2e/00d4ff?text=CYBERGARD+LOGS+ANALYZER" width="90%"/>
+  <img src=CyberGuard-Logs Analyser.png width="90%"/>
   <br>
   <a href="https://cyber-guard-logs-analyzer--maxinfo989.replit.app">
     <img src="https://img.shields.io/badge/LIVE_DEMO-🔥-00D4FF?style=for-the-badge&logo=google-chrome&logoColor=white" alt="Live Demo">
