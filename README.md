@@ -1,18 +1,16 @@
 # CyberGuard-Logs-Analyzer
 Repository Name: CyberGuard-Logs-Analyzer Description: 🔒 Real-time Cybersecurity Logs Analyzer with Threat Detection Tags: cybersecurity, logs, flask, security, dashboard License: MIT
 
-CyberGuard-Logs-Analyzer/
-├── README.md                 ← This description
-├── app.py                    ← Main Flask app (ALL-IN-ONE)
-├── requirements.txt          ← Dependencies
-├── data/
-│   └── sample_logs.json      ← Sample data
-├── static/
-│   ├── style.css            ← Optional CSS
-│   └── script.js            ← Optional JS
-└── .github/workflows/
-    └── deploy.yml           ← Auto-deploy
+# 🔒 CyberGuard Logs Analyzer
 
+<div align="center">
+  <img src="https://via.placeholder.com/800x400/1a1a2e/00d4ff?text=CYBERGARD+LOGS+ANALYZER" width="90%"/>
+  <br>
+  <a href="https://cyber-guard-logs-analyzer--maxinfo989.replit.app">
+    <img src="https://img.shields.io/badge/LIVE_DEMO-🔥-00D4FF?style=for-the-badge&logo=google-chrome&logoColor=white" alt="Live Demo">
+  </a>
+  <a href="https://replit.com">
+    <img src="https://img.shields.io
     # 🔒 CyberGuard - Logs Analyzer
 
 [![Status](https://img.shields.io/badge/Status-Live-brightgreen)](https://your-username.github.io/CyberGuard-Logs-Analyzer)
