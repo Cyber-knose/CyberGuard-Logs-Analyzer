@@ -25,14 +25,6 @@ Repository Name: CyberGuard-Logs-Analyzer Description: 🔒 Real-time Cybersecur
 - 🌐 Fully responsive design
 - ⚡ Live updates every 30 seconds
 
-## 🚀 Quick Start
-
- GitHub Codespaces (Recommended)
-1. Click **"Code" → "Codespaces" → "Create codespace"**
-2. Wait for setup (2 mins)
-3. Terminal: `pip install -r requirements.txt`
-4. Run: `python app.py`
-5. **Click "Port 5000" → Open in Browser** ✅
 
 📈 Threat Detection Rules
 DDoS: >15 requests/IP in 100 logs
