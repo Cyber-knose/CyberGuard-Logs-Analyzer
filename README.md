@@ -12,6 +12,14 @@ Repository Name: CyberGuard-Logs-Analyzer Description: 🔒 Real-time Cybersecur
 [![Python](https://img.shields.io/badge/Python-3.8+-blue)](https://python.org)
 [![License](https://img.shields.io/github/license/yourusername/CyberGuard-Logs-Analyzer)](LICENSE)
 
+# 🔒 CyberGuard Logs Analyzer
+
+<div align="center">
+  <img src="screenshot.png" alt="CyberGuard Dashboard" width="95%"/>
+  <br><br>
+  <a href="https://cyber-guard-logs-analyzer--maxinfo989.replit.app">
+    <img src="https://img.shields.io/badge/LIVE_DEMO-🔥-00D
+
 **Real-time cybersecurity logs analyzer with threat detection, dashboard, and live monitoring.**
 
 ## ✨ Features
