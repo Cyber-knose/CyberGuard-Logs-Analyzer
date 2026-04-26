@@ -53,6 +53,17 @@ MIT License - Free to use/modify
 🙏 Acknowledgments
 Built for cybersecurity education & monitoring
 
+# 🔒 CyberGuard Logs Analyzer
+
+<div align="center">
+  <img src="https://via.placeholder.com/800x400/0a0a0a/00d4ff?text=CyberGuard+Dashboard" alt="Dashboard Preview"/>
+  <br><br>
+  <img src="https://via.placeholder.com/400x200/1a1a2e/ff6b6b?text=Threat+Detection" alt="Threats"/>
+  <img src="https://via.placeholder.com/400x200/16213e/4ade80?text=Live+Logs" alt="Logs"/>
+</div>
+
+[![Live Demo](https://img.shields.io/badge/LIVE_DEMO-🚀-00D4FF?style
+
 ### Option 2: Local Setup
 ```bash
 git clone https://github.com/YOURUSERNAME/CyberGuard-Logs-Analyzer.git
