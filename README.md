@@ -3,15 +3,12 @@ Repository Name: CyberGuard-Logs-Analyzer Description: 🔒 Real-time Cybersecur
 
 # 🔒 CyberGuard Logs Analyzer
 
+# 🔒 CyberGuard Logs Analyzer
+
 <div align="center">
-  <img src=CyberGuard-Logs Analyser.png width="90%"/>
-  <br>
-  <a href="https://cyber-guard-logs-analyzer--maxinfo989.replit.app">
-    <img src="https://img.shields.io/badge/LIVE_DEMO-🔥-00D4FF?style=for-the-badge&logo=google-chrome&logoColor=white" alt="Live Demo">
-  </a>
-  <a href="https://replit.com">
-    <img src="https://img.shields.io
-    # 🔒 CyberGuard - Logs Analyzer
+  <img src="screenshot.png" alt="CyberGuard Dashboard" width="100%"/>
+  <br><br>
+  <a href="https://github.com/Cyber-knose/CyberGuard-Logs-Analyzer"/>
 
 [![Status](https://img.shields.io/badge/Status-Live-brightgreen)](https://your-username.github.io/CyberGuard-Logs-Analyzer)
 [![Python](https://img.shields.io/badge/Python-3.8+-blue)](https://python.org)
